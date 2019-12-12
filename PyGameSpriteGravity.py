@@ -1,20 +1,31 @@
 import pygame
+import os
 
 pygame.init()
-
-win = pygame.display.set_mode((500, 500))
-pygame.display.set_caption("First Game")
+win = pygame.display.set_mode((440, 500))
+pygame.display.set_caption("PaperMc")
 
 x = 50
 y = 400
 width = 40
 height = 80
-vel = 5
-
+vel = 15
 isJump = False
 jumpCount = 10
-
 run = True
+
+_image_library = {}
+
+f= open("world.txt","w+")
+
+def get_image(path):
+    global _image_library
+    image = _image_library.get(path)
+    if image == None:
+        canonicalized_path = path.replace('/', os.sep).replace('\\', os.sep)
+        image = pygame.image.load(canonicalized_path)
+        _image_library[path] = image
+    return image
 
 while run:
     pygame.time.delay(100)
@@ -28,11 +39,11 @@ while run:
     if keys[pygame.K_LEFT] and x > vel:
         x -= vel
 
-    if keys[pygame.K_RIGHT] and x < 500 - vel - width:
+    if keys[pygame.K_RIGHT] and x < 400 - vel - width:
         x += vel
 
     if not (isJump):
-        if keys[pygame.K_DOWN] and y < 500 - height - vel:
+        if keys[pygame.K_DOWN] and y < 400 - height - vel:
             y += vel
 
         if keys[pygame.K_SPACE]:
@@ -45,8 +56,20 @@ while run:
             jumpCount = 10
             isJump = False
 
-    win.fill((130, 247, 255))
-    pygame.draw.rect(win, (255, 0, 0), (x, y, width, height))
+    win.fill((255, 255, 255))
+    win.blit(get_image('stone.png'), (0, 460))
+    win.blit(get_image('grass.jpg'), (40, 460))
+    win.blit(get_image('stone.png'), (80, 460))
+    win.blit(get_image('grass.jpg'), (120, 460))
+    win.blit(get_image('stone.png'), (160, 460))
+    win.blit(get_image('grass.jpg'), (200, 460))
+    win.blit(get_image('stone.png'), (240, 460))
+    win.blit(get_image('grass.jpg'), (280, 460))
+    win.blit(get_image('stone.png'), (320, 460))
+    win.blit(get_image('grass.jpg'), (360, 460))
+    win.blit(get_image('stone.png'), (400, 460))
+
+    win.blit(get_image('player.jpg'), (x, y))
     pygame.display.update()
 
 pygame.quit()
