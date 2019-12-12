@@ -6,7 +6,7 @@ win = pygame.display.set_mode((440, 500))
 pygame.display.set_caption("PaperMc")
 
 x = 50
-y = 380
+y = 340
 width = 40
 height = 80
 vel = 15
